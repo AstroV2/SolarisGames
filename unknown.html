@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#061826">
+  <title>UNKNOWN.exe — Neon Arcade</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body { min-height: 100vh; margin: 0; overflow: hidden; color: #dffffb; background: radial-gradient(ellipse at 50% 40%, #0a1521 0, #010012 100%); font-family: 'Share Tech Mono', Consolas, monospace; }
+    .game-shell { min-height: 100vh; display: grid; place-items: center; padding: 58px 18px 28px; }
+    .cabinet { position: relative; width: min(900px, 94vw); padding: clamp(10px, 2vw, 24px); background: repeating-linear-gradient(135deg,#171b23 0 10px,#13141a 10px 20px); border: 5px solid #00ffd0; border-radius: 22px; outline: 7px solid #061826; box-shadow: 0 0 48px #00ffd066, inset 0 0 44px #09f5ff33, 0 0 0 14px #24243a; }
+    #gameCanvas { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; background: radial-gradient(circle at 50% 60%, #263445, #0a0c1a 90%); image-rendering: pixelated; cursor: crosshair; touch-action: none; }
+    .back-link, .shop-open { position: fixed; z-index: 5; top: 16px; padding: 9px 13px; color: #00ffd0; background: #101923; border: 1px solid #00ffd0; text-decoration: none; font: inherit; box-shadow: 0 0 12px #00ffd055; }
+    .back-link { left: 16px; }.shop-open { right: 16px; color: #ffe100; border-color: #ffe100; cursor: pointer; }
+    .hud { position: fixed; z-index: 3; top: 18px; left: 50%; max-width: min(60vw, 560px); transform: translateX(-50%); color: #00ffd0; text-align: center; text-shadow: 0 0 12px #00ffd0; pointer-events: none; line-height: 1.45; }
+    .hint { position: fixed; bottom: 12px; left: 0; width: 100%; color: #a8d8df; text-align: center; font-size: 13px; }
+    .overlay { position: fixed; inset: 0; z-index: 10; display: none; align-items: center; justify-content: center; padding: 18px; background: #050b12ed; }
+    .overlay.is-open { display: flex; }
+    .window { position: relative; width: min(520px, 100%); max-height: 86vh; overflow: auto; padding: 34px 26px 24px; border: 2px solid #00ffd0; background: linear-gradient(135deg,#161a26,#0f1a1e); box-shadow: 0 0 38px #00ffd055; }
+    .window h1 { margin: 0 0 8px; color: #00ffd0; text-align: center; font-size: clamp(24px, 5vw, 36px); text-shadow: 0 0 15px #00ffd0; }
+    .window p { color: #b9f0ff; text-align: center; }
+    .window-close { position: absolute; top: 9px; right: 10px; border: 0; padding: 6px 10px; background: #ff0044; color: white; font: inherit; cursor: pointer; }
+    #balance { color: #ffe100; text-align: center; font-size: 20px; }
+    .upgrade-list { display: grid; gap: 10px; max-height: 52vh; overflow-y: auto; }
+    .upgrade { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px; background: #1c2840; box-shadow: inset 0 0 9px #00ffd033; }
+    .upgrade strong { color: #00ffd0; }.upgrade small { display: block; margin-top: 4px; color: #b9f0ff; }
+    .upgrade button, .action-button { flex: none; padding: 8px 12px; border: 0; color: #222; background: #ffe100; font: inherit; cursor: pointer; }
+    .upgrade button:disabled { color: #888; background: #333a4a; cursor: not-allowed; }
+    .admin-tools { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 14px 0 18px; }
+    .admin-tools .action-button { min-height: 40px; }
+    #cheatOverlay { z-index: 12; }
+    @media (max-width: 600px) { .game-shell { padding: 70px 12px 48px; }.cabinet { width: 96vw; padding: 8px; border-width: 3px; border-radius: 14px; }.hud { top: 54px; max-width: 82vw; font-size: 13px; }.back-link,.shop-open { top: 12px; font-size: 12px; }.back-link { left: 10px; }.shop-open { right: 10px; }.hint { font-size: 11px; padding: 0 8px; }.window { padding: 34px 16px 18px; }.admin-tools { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <a class="back-link" href="index.html">← ARCADE HOME</a>
+  <button class="shop-open" id="shopOpenBtn" type="button">SHOP</button>
+  <div class="hud" id="hud" aria-live="polite">UNKNOWN.exe · SCORE 0 · HP 3</div>
+  <main class="game-shell">
+    <div class="cabinet"><canvas id="gameCanvas" width="800" height="600" aria-label="Survival shooter game"></canvas></div>
+  </main>
+  <p class="hint">MOVE: WASD / ARROWS · AIM: MOUSE · FIRE: CLICK / SPACE · P PAUSE<br>WAVES GET HARDER · YELLOW RUNNERS · RED TANKS · PURPLE BOSS EVERY 5 WAVES · R RESTART</p>
+
+  <section class="overlay" id="shopOverlay" aria-label="Arcade shop">
+    <div class="window">
+      <button class="window-close" id="shopCloseBtn" type="button">✕</button>
+      <h1>ARCADE SHOP</h1>
+      <div id="balance">Credits: 0</div>
+      <p>Earn credits by destroying enemies. Upgrades persist between runs.</p>
+      <div class="upgrade-list" id="upgradeList"></div>
+    </div>
+  </section>
+  <section class="overlay" id="cheatOverlay" aria-label="Developer cheat mode">
+    <div class="window">
+      <button class="window-close" id="cheatCloseBtn" type="button">✕</button>
+      <h1>CHEAT MODE</h1>
+      <p>Developer access granted. Hold P + A + X to open this panel.</p>
+      <div class="admin-tools">
+        <button class="action-button" id="cheatPointsBtn" type="button">+1000 CREDITS</button>
+        <button class="action-button" id="infiniteCoinsBtn" type="button">INFINITE COINS: OFF</button>
+        <button class="action-button" id="godModeBtn" type="button">GOD MODE: OFF</button>
+        <button class="action-button" id="healBtn" type="button">FULL HEAL</button>
+        <button class="action-button" id="maxUpgradesBtn" type="button">MAX UPGRADES</button>
+        <button class="action-button" id="clearEnemiesBtn" type="button">CLEAR ARENA</button>
+        <button class="action-button" id="scoreBoostBtn" type="button">+10,000 SCORE</button>
+      </div>
+      <h2 style="color:#00ffd0;text-align:center;font-size:20px">PIXEL MONSTER EDITOR</h2>
+      <p>Draw a 16 × 16 enemy and spawn it into the arena.</p>
+      <div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:10px" id="pixelPalette"></div>
+      <canvas id="pixelCanvas" width="16" height="16" aria-label="Pixel monster drawing canvas" style="display:block;width:160px;height:160px;margin:0 auto 10px;border:2px solid #00ffd0;image-rendering:pixelated;touch-action:none;cursor:crosshair"></canvas>
+      <label for="monsterName" style="display:block;color:#b9f0ff;margin-bottom:6px">Monster name</label>
+      <input id="monsterName" maxlength="24" placeholder="Pixel monster" style="width:100%;padding:8px;background:#081a25;color:#fff;border:1px solid #00ffd0;font:inherit">
+      <button class="action-button" id="saveMonsterBtn" type="button" style="margin-top:10px">SAVE MONSTER</button>
+      <div id="monsterList" style="display:grid;gap:8px;margin-top:12px"></div>
+    </div>
+  </section>
+  <script src="achievements.js"></script>
+  <script src="unknown.js"></script>
+</body>
+</html>

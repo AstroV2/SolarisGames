@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#161f27">
+  <title>Neon Arcade</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="home-page">
+  <main class="arcade-home">
+    <header class="home-heading">
+      <p class="home-eyebrow">✦ INSERT COIN · ENTER THE ARCADE ✦</p>
+      <h1>SOLARIS <span>GAMES</span></h1>
+      <p class="home-intro">Pick a game. Roll your fate. Make some pixels.</p>
+    </header>
+
+    <section class="game-shelf" aria-labelledby="games-title">
+      <div class="shelf-heading">
+        <h2 id="games-title">SELECT YOUR GAME</h2>
+        <span class="shelf-status"><i></i> 4 GAMES READY</span>
+      </div>
+      <a class="game-card superpower-card" href="superpower.html">
+        <div class="card-art" aria-hidden="true">
+          <span class="pixel-star star-one">✦</span>
+          <span class="pixel-star star-two">✧</span>
+          <span class="power-orb">⚡</span>
+          <span class="orb-spark spark-one">✦</span>
+          <span class="orb-spark spark-two">✧</span>
+        </div>
+        <div class="card-info">
+          <div class="card-kicker">RNG · COLLECTION</div>
+          <h3>SUPERPOWER <span>RNG</span></h3>
+          <p>Roll for a power, collect every rarity, and see what fate has in store.</p>
+          <span class="play-link">PLAY GAME <b aria-hidden="true">→</b></span>
+        </div>
+        <span class="card-index" aria-hidden="true">01</span>
+      </a>
+      <a class="game-card unknown-card" href="unknown.html">
+        <div class="card-art unknown-art" aria-hidden="true">
+          <span class="pixel-star star-one">✦</span>
+          <span class="unknown-core">?</span>
+          <span class="pixel-star star-two">✧</span>
+          <span class="unknown-scanline"></span>
+        </div>
+        <div class="card-info">
+          <div class="card-kicker">SURVIVAL · ARCADE SHOOTER</div>
+          <h3>UNKNOWN<span>.exe</span></h3>
+          <p>Survive the corrupted arcade, blast enemies, and power up in the shop.</p>
+          <span class="play-link">PLAY GAME <b aria-hidden="true">→</b></span>
+        </div>
+        <span class="card-index" aria-hidden="true">02</span>
+      </a>
+      <a class="game-card craft-card" href="alchemy.html">
+        <div class="card-art craft-art" aria-hidden="true">
+          <span class="pixel-star star-one">✦</span>
+          <span class="craft-orb">🔥</span>
+          <span class="craft-orb craft-orb-two">💧</span>
+          <span class="pixel-star star-two">✧</span>
+        </div>
+        <div class="card-info">
+          <div class="card-kicker">DISCOVERY · ELEMENT CRAFTING</div>
+          <h3>INFINITE <span>ALCHEMY</span></h3>
+          <p>Combine elements, uncover strange discoveries, and build your own collection.</p>
+          <span class="play-link">PLAY GAME <b aria-hidden="true">→</b></span>
+        </div>
+        <span class="card-index" aria-hidden="true">03</span>
+      </a>
+      <a class="game-card drift-card" href="drift.html">
+        <div class="card-art drift-art" aria-hidden="true">
+          <span class="pixel-star star-one">✦</span>
+          <span class="drift-star">✳</span>
+          <span class="drift-ship">➤</span>
+          <span class="pixel-star star-two">✧</span>
+        </div>
+        <div class="card-info">
+          <div class="card-kicker">ENDLESS SURVIVAL · AUTO-SHOOTER</div>
+          <h3>NEON <span>DRIFT</span></h3>
+          <p>Outmaneuver a growing swarm, grab energy, and build a stronger ship every run.</p>
+          <span class="play-link">PLAY GAME <b aria-hidden="true">→</b></span>
+        </div>
+        <span class="card-index" aria-hidden="true">04</span>
+      </a>
+      <article class="game-card coming-card" aria-label="Coming soon game">
+        <div class="card-art coming-art" aria-hidden="true">
+          <span class="coming-question">?</span>
+          <span class="coming-board coming-board-one"></span>
+          <span class="coming-board coming-board-two"></span>
+          <span class="coming-board coming-board-three"></span>
+          <span class="coming-stamp">COMING<br>SOON</span>
+        </div>
+        <div class="card-info">
+          <div class="card-kicker">ARCADE SLOT · SEALED</div>
+          <h3>??? <span>???</span></h3>
+          <p>A new game is under construction. Check back when the boards come down.</p>
+          <span class="play-link coming-label">COMING SOON</span>
+        </div>
+        <span class="card-index" aria-hidden="true">05</span>
+      </article>
+    </section>
+    <footer class="home-footer">PIXELS ARE POWER <span>◆</span> CHOOSE YOUR DESTINY<br><a class="export-link" href="export.html">DOWNLOAD PROJECT ZIP</a></footer>
+  </main>
+  <script src="achievements.js"></script>
+</body>
+</html>

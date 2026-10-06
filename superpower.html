@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#161f27">
+  <title>Superpower RNG</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Orbitron:wght@700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="game-page">
+    <header class="page-heading">
+      <p class="eyebrow">✦ THE POWER IS IN YOUR HANDS ✦</p>
+      <h1>SUPERPOWER <span>RNG</span></h1>
+      <p class="release">RELEASE DAY <span>V26.10.6.1037</span></p>
+    </header>
+
+    <section id="game-container" aria-label="Superpower RNG game">
+      <a id="home-link" href="index.html">← ARCADE HOME</a>
+      <button id="inventory-btn" type="button" title="Or press I">INVENTORY</button>
+      <div id="chance-bar-container">
+        <div id="chance-bar-label">ROLL CHANCES</div>
+        <div id="chance-bar" aria-label="Common 42%, Uncommon 25%, Rare 17%, Epic 9%, Legendary 4.5%, Ultra 1.5%, Mythic 0.8%, Divine 0.15%, Timeless 0.05%">
+          <div class="chance-inner common"></div><div class="chance-inner uncommon"></div><div class="chance-inner rare"></div><div class="chance-inner epic"></div><div class="chance-inner legendary"></div><div class="chance-inner ultra"></div><div class="chance-inner mythic"></div><div class="chance-inner divine"></div><div class="chance-inner timeless"></div>
+        </div>
+        <div class="chance-labels"><span>Common</span><span>Uncommon</span><span>Rare</span><span>Epic</span><span>Legendary</span><span>Ultra</span><span>Mythic</span><span>Divine</span><span>Timeless</span></div>
+      </div>
+      <button id="roll-btn" type="button">🎲 Roll for a Superpower!</button>
+      <div id="result" aria-live="polite">Your next power is waiting...</div>
+      <p id="luck-meter" aria-live="polite">LUCK METER · 0 / 20 rolls toward a Legendary guarantee</p>
+      <p id="howto">Press <b>I</b> to open inventory.<br>Hold <b>P + A + X</b> to open the admin panel.<br>Try to roll all the mythic powers!</p>
+    </section>
+  </main>
+
+  <div id="inventory-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="inventory-title">
+    <div id="inventory-content" class="modal-content" tabindex="-1">
+      <button id="close-inventory" class="close-button" type="button">Close</button>
+      <h2 id="inventory-title">Your Superpowers</h2>
+      <ul id="inventory-list" class="inventory-list"></ul>
+      <p class="modal-note">Duplicates are possible. Use FLEX POWER to share a collectible through your device's share menu or copy it into a chat.</p>
+    </div>
+  </div>
+
+  <div id="cheat-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="cheat-title">
+    <div id="cheat-content" class="modal-content cheat-content" tabindex="-1">
+      <button id="close-cheat" class="close-button" type="button">Close</button>
+      <h2 id="cheat-title">RNG Admin Panel</h2>
+      <form id="cheat-form" autocomplete="off">
+        <h3 class="admin-section-title">Inventory Mods</h3>
+        <label for="cheat-select">Choose a superpower:</label>
+        <select id="cheat-select"></select>
+        <button class="submit-button" type="submit">Add Selected Power</button>
+        <div class="admin-actions">
+          <button type="button" data-admin-action="ten">Add 10 Random Powers</button>
+          <button type="button" data-admin-action="all">Grant Every Power</button>
+          <button type="button" data-admin-action="duplicate">Duplicate Latest</button>
+          <button type="button" data-admin-action="remove">Remove Latest</button>
+          <button type="button" data-admin-action="clear">Clear Inventory</button>
+        </div>
+        <h3 class="admin-section-title">Roll Mods</h3>
+        <label for="admin-forced-rarity">Force roll rarity</label>
+        <select id="admin-forced-rarity">
+          <option value="">Normal odds</option>
+          <option value="common">Common</option><option value="uncommon">Uncommon</option>
+          <option value="rare">Rare</option><option value="epic">Epic</option>
+          <option value="legendary">Legendary</option><option value="ultra">Ultra</option>
+          <option value="mythic">Mythic</option><option value="divine">Divine</option><option value="timeless">Timeless</option>
+        </select>
+        <label class="admin-check"><input id="admin-no-duplicates" type="checkbox"> No duplicate rolls</label>
+        <label class="admin-check"><input id="admin-instant-roll" type="checkbox"> Skip roll animation</label>
+        <div id="cheat-status" aria-live="polite"></div>
+      </form>
+    </div>
+  </div>
+
+  <script src="achievements.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
